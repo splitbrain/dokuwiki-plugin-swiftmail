@@ -50,7 +50,6 @@ class action_plugin_swiftmail extends DokuWiki_Action_Plugin {
         require_once dirname(__FILE__).'/Swift.php';
         require_once dirname(__FILE__).'/Swift/Connection/SMTP.php';
         $ok = false;
-
         if($this->getConf('debug')){
             $log =& Swift_LogContainer::getLog();
             $log->setLogLevel(Swift_Log::LOG_EVERYTHING);
@@ -77,6 +76,7 @@ class action_plugin_swiftmail extends DokuWiki_Action_Plugin {
             // handle the recipients (duplicates some code from mail_encode_address)
             $reci =& new Swift_RecipientList();
             $from = null;
+            $num  = 0;
             foreach(array('to','cc','bcc','from') as $hdr){
                 $parts = split(',',$event->data[$hdr]);
                 foreach ($parts as $part){
@@ -97,13 +97,23 @@ class action_plugin_swiftmail extends DokuWiki_Action_Plugin {
                     if($hdr == 'from'){
                         $from =& new Swift_Address($addr,$text);
                     }else{
-                        $reci->add($addr,$text,$hdr);
+                        if($hdr == 'to' || $hdr == 'cc') $num++;
+                        if($hdr == 'bcc' && $num == 0){
+                            // no to and cc - add bcc as to and send as batch later
+                            $reci->add($addr,$text,'to');
+                        }else{
+                            $reci->add($addr,$text,$hdr);
+                        }
                     }
                 }
             }
 
             // now finally send the mail
-            $ok = $swift->send($message, $reci, $from);
+            if($num){
+                $ok = $swift->send($message, $reci, $from);
+            }else{
+                $ok = $swift->batchSend($message, $reci, $from);
+            }
         } catch (Swift_ConnectionException $e) {
             msg('There was a problem communicating with SMTP: '.$e->getMessage(),-1);
         } catch (Swift_Message_MimeException $e) {
