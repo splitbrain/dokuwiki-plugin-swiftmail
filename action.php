@@ -23,7 +23,7 @@ class action_plugin_swiftmail extends DokuWiki_Action_Plugin {
         return array(
             'author' => 'Andreas Gohr',
             'email'  => 'andi@splitbrain.org',
-            'date'   => '2008-09-26',
+            'date'   => '2008-10-06',
             'name'   => 'SwiftMailer Plugin',
             'desc'   => 'Use SwiftMailer for sending mails from DokuWiki (uses SwiftMailer 3.3.3-php5)',
             'url'    => 'http://wiki:splitbrain.org/plugin:swiftmail',
@@ -113,12 +113,12 @@ class action_plugin_swiftmail extends DokuWiki_Action_Plugin {
         }
 
         if(!$ok && $this->getConf('debug')){
-            dbg( $log->dump(true) );
+            msg('SwiftMailer log:<br /><pre>'.hsc($log->dump(true).'</pre>'),-1);
         }
 
         $event->preventDefault();
         $event->stopPropagation();
-        return $ok;
+        $event->result = $ok;
     }
 }
 
