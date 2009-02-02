@@ -11,4 +11,6 @@ $lang['smtp_ssl_o_2']   = 'TLS';
 $lang['auth_user'] = 'If authentication is required, put your user name here.';
 $lang['auth_pass'] = 'Password for the above user.';
 
+$lang['localdomain'] = 'The name to be used during HELO phase of SMTP. Should be the FQDN of the webserver DokuWiki is running on. Leave empty for autodetection.';
+
 $lang['debug'] = 'Print a full error log when sending fails? Disable when everything works!';

@@ -23,7 +23,7 @@ class action_plugin_swiftmail extends DokuWiki_Action_Plugin {
         return array(
             'author' => 'Andreas Gohr',
             'email'  => 'andi@splitbrain.org',
-            'date'   => '2008-10-06',
+            'date'   => '2009-02-02',
             'name'   => 'SwiftMailer Plugin',
             'desc'   => 'Use SwiftMailer for sending mails from DokuWiki (uses SwiftMailer 3.3.3-php5)',
             'url'    => 'http://wiki:splitbrain.org/plugin:swiftmail',
@@ -68,7 +68,7 @@ class action_plugin_swiftmail extends DokuWiki_Action_Plugin {
             if($this->getConf('auth_pass')) $smtp->setPassword($this->getConf('auth_pass'));
 
             // start Swift
-            $swift =& new Swift($smtp);
+            $swift =& new Swift($smtp,$this->getConf('localdomain'));
 
             // prepare message (Swift autodetects UTF-8)
             $message =& new Swift_Message($event->data['subject'], $event->data['body']);
