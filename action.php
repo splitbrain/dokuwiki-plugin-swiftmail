@@ -23,7 +23,7 @@ class action_plugin_swiftmail extends DokuWiki_Action_Plugin {
         return array(
             'author' => 'Andreas Gohr',
             'email'  => 'andi@splitbrain.org',
-            'date'   => '2009-02-02',
+            'date'   => '2008-10-06',
             'name'   => 'SwiftMailer Plugin',
             'desc'   => 'Use SwiftMailer for sending mails from DokuWiki (uses SwiftMailer 3.3.3-php5)',
             'url'    => 'http://wiki:splitbrain.org/plugin:swiftmail',
@@ -123,7 +123,10 @@ class action_plugin_swiftmail extends DokuWiki_Action_Plugin {
         }
 
         if(!$ok && $this->getConf('debug')){
-            msg('SwiftMailer log:<br /><pre>'.hsc($log->dump(true).'</pre>'),-1);
+            $dbglog = $log->dump(true);
+            $dbglog = preg_replace('/(AUTH \w+ ).*$/m','\\1 ***',$dbglog); //filter out passwords
+            $dbglog = preg_replace('/(PASS ).*$/m','\\1 ***',$dbglog); //filter out passwords
+            msg('SwiftMailer log:<br /><pre>'.hsc($dbglog).'</pre>',-1);
         }
 
         $event->preventDefault();

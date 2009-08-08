@@ -26,11 +26,6 @@ class Swift_Exception extends Exception
    */
   public function __construct($message, $code = 0)
   {
-    if (($log = Swift_LogContainer::getLog()) && $log->isEnabled())
-    {
-      $message .= "<h3>Log Information</h3>";
-      $message .= "<pre>" . htmlentities($log->dump(true)) . "</pre>";
-    }
     parent::__construct($message, $code);
   }
 }
