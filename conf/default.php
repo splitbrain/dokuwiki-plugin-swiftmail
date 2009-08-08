@@ -8,5 +8,6 @@ $conf['localdomain'] = '';
 
 $conf['auth_user'] = '';
 $conf['auth_pass'] = '';
+$conf['pop3_host'] = '';
 
 $conf['debug'] = 0;

@@ -10,6 +10,7 @@ $lang['smtp_ssl_o_2']   = 'TLS';
 
 $lang['auth_user'] = 'If authentication is required, put your user name here.';
 $lang['auth_pass'] = 'Password for the above user.';
+$lang['pop3_host'] = 'If your server uses POP-before-SMTP for authentication, give your POP3 credentials above and put your POP3 server here. For usual SMTP auth leave this field empty.';
 
 $lang['localdomain'] = 'The name to be used during HELO phase of SMTP. Should be the FQDN of the webserver DokuWiki is running on. Leave empty for autodetection.';
 

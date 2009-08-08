@@ -41,7 +41,7 @@ class Swift_Authenticator_PopB4Smtp_Pop3Connection
    * @var resource
    */
   protected $handle = null;
-  
+
   /**
    * Constructor
    * @param string The name of the POP3 server
@@ -123,8 +123,14 @@ class Swift_Authenticator_PopB4Smtp_Pop3Connection
   {
     $url = $this->getServer();
     if ($this->getEncryption() == self::ENC_SSL) $url = "ssl://" . $url;
-    
-    if ((false === $this->handle = fsockopen($url, $this->getPort(), $errno, $errstr, $timeout)))
+
+    $log = Swift_LogContainer::getLog();
+    if ($log->hasLevel(Swift_Log::LOG_NETWORK))
+    {
+      $log->add("Trying to connect to POP3 server ".$url." on port ".$this->getPort());
+    }
+
+    if ((false === $this->handle = @fsockopen($url, $this->getPort(), $errno, $errstr, 5)))
     {
       Swift_ClassLoader::load("Swift_ConnectionException");
       throw new Swift_ConnectionException("The POP3 connection failed to start.  The error string returned from fsockopen() is [" . $errstr . "] #" . $errno);
@@ -158,7 +164,14 @@ class Swift_Authenticator_PopB4Smtp_Pop3Connection
       Swift_ClassLoader::load("Swift_ConnectionException");
       throw new Swift_ConnectionException("Data could not be read from the POP3 connection.");
     }
-    return trim($response);
+    $response = trim($response);
+
+    $log = Swift_LogContainer::getLog();
+    if ($log->hasLevel(Swift_Log::LOG_NETWORK))
+    {
+      $log->add($response,Swift_Log::RESPONSE);
+    }
+    return $response;
   }
   /**
    * Write a command to the remote socket
@@ -167,10 +180,16 @@ class Swift_Authenticator_PopB4Smtp_Pop3Connection
    */
   public function write($command)
   {
-    if (false !== fwrite($this->handle, $command . "\r\n"))
+    if (false === fwrite($this->handle, $command . "\r\n"))
     {
       Swift_ClassLoader::load("Swift_ConnectionException");
       throw new Swift_ConnectionException("Data could not be written to the POP3 connection.");
+    }
+
+    $log = Swift_LogContainer::getLog();
+    if ($log->hasLevel(Swift_Log::LOG_NETWORK))
+    {
+      $log->add($command,Swift_Log::COMMAND);
     }
   }
 }

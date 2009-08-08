@@ -63,6 +63,12 @@ class action_plugin_swiftmail extends DokuWiki_Action_Plugin {
                         $this->getConf('smtp_ssl')
                      );
 
+            // use Pop-before-SMTP
+            if($this->getConf('pop3_host')) {
+                require_once dirname(__FILE__).'/Swift/Authenticator/@PopB4Smtp.php';
+                $smtp->attachAuthenticator(new Swift_Authenticator_PopB4Smtp($this->getConf('pop3_host')));
+            }
+
             // use SMTP auth?
             if($this->getConf('auth_user')) $smtp->setUsername($this->getConf('auth_user'));
             if($this->getConf('auth_pass')) $smtp->setPassword($this->getConf('auth_pass'));

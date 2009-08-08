@@ -65,6 +65,7 @@ class Swift_Authenticator_PopB4Smtp implements Swift_Authenticator
     } catch (Swift_ConnectionException $e) {
       if ($log->hasLevel(Swift_Log::LOG_ERRORS))
       {
+        $log->add($e->getMessage(),Swift_Log::ERROR);
         $log->add("POP3 authentication failed.");
       }
       return false;
