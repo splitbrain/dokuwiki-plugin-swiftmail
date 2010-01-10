@@ -15,22 +15,6 @@ require_once(DOKU_PLUGIN.'action.php');
 class action_plugin_swiftmail extends DokuWiki_Action_Plugin {
 
     /**
-     * return some info
-     *
-     * @author Andreas Gohr <andi@splitbrain.org>
-     */
-    function getInfo(){
-        return array(
-            'author' => 'Andreas Gohr',
-            'email'  => 'andi@splitbrain.org',
-            'date'   => '2009-08-08',
-            'name'   => 'SwiftMailer Plugin',
-            'desc'   => 'Use SwiftMailer for sending mails from DokuWiki (uses SwiftMailer 3.3.3-php5)',
-            'url'    => 'http://wiki:splitbrain.org/plugin:swiftmail',
-        );
-    }
-
-    /**
      * register the eventhandlers
      *
      * @author Andreas Gohr <andi@splitbrain.org>
