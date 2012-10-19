@@ -63,6 +63,17 @@ class action_plugin_swiftmail extends DokuWiki_Action_Plugin {
             // prepare message (Swift autodetects UTF-8)
             $message =& new Swift_Message($event->data['subject'], $event->data['body']);
 
+            // did we get an Adora Belle Mailer object?
+            if(isset($event->data['mail']) && is_a($event->data['mail'],'Mailer')){
+                // we'd need to call cleanHeaders() here, but it's protected in Adora Belle.
+                // instead we call the dump() method which will call cleanHeaders for us
+                if(is_callable(array($event->data['mail'],'cleanHeaders()'))){
+                    $event->data['mail']->cleanHeaders();
+                }else{
+                    $event->data['mail']->dump();
+                }
+            }
+
             // handle the recipients (duplicates some code from mail_encode_address)
             $reci =& new Swift_RecipientList();
             $from = null;
@@ -122,6 +133,7 @@ class action_plugin_swiftmail extends DokuWiki_Action_Plugin {
         $event->preventDefault();
         $event->stopPropagation();
         $event->result = $ok;
+        $event->data['success'] = $ok;
     }
 }
 
