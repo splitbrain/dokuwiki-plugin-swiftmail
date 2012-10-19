@@ -22,20 +22,24 @@ class admin_plugin_swiftmail extends DokuWiki_Admin_Plugin {
      */
     function handle() {
         global $INPUT;
+        global $conf;
         if(!$INPUT->bool('send')) return;
 
-        $mail = new Mailer();
+        // make sure debugging is on;
+        $conf['plugin']['swiftmail']['debug'] = 1;
 
+        // send a mail
+        $mail = new Mailer();
         if($INPUT->str('to')) $mail->to($INPUT->str('to'));
         if($INPUT->str('cc')) $mail->to($INPUT->str('cc'));
         if($INPUT->str('bcc')) $mail->to($INPUT->str('bcc'));
-
-        $mail->subject('SwiftMail Plugin say hello');
-        $mail->setBody('This is a first test');
-
+        $mail->subject('SwiftMail Plugin says hello');
+        $mail->setBody("Hi @USER@\n\nThis is a test from @DOKUWIKIURL@");
         $ok = $mail->send();
+
+        // check result
         if($ok){
-            msg('Message was sent. Swiftmail seem to work.',1);
+            msg('Message was sent. Swiftmail seems to work.',1);
         }else{
             msg('Message wasn\'t sent. Swiftmail seems not to work properly.',-1);
         }
