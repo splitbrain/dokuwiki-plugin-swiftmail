@@ -50,7 +50,12 @@ class admin_plugin_swiftmail extends DokuWiki_Admin_Plugin {
      */
     function html() {
         global $INPUT;
+        global $conf;
+
         echo $this->locale_xhtml('intro');
+
+        if(!$conf['mailfrom']) msg($this->getLang('nofrom'),-1);
+
 
         $form = new Doku_Form(array());
         $form->startFieldset('Testmail');
