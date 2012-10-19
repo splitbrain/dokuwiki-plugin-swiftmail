@@ -1,0 +1,3 @@
+====== SwiftMail Testing ======
+
+This page allows you to trigger sending a test mail in DokuWiki. You can use it to check if you configured the SwiftMail plugin correctly.

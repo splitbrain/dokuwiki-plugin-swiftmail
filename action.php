@@ -68,7 +68,7 @@ class action_plugin_swiftmail extends DokuWiki_Action_Plugin {
             $from = null;
             $num  = 0;
             foreach(array('to','cc','bcc','from') as $hdr){
-                $parts = split(',',$event->data[$hdr]);
+                $parts = explode(',',$event->data[$hdr]);
                 foreach ($parts as $part){
                     $part = trim($part);
 
