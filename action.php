@@ -19,7 +19,7 @@ class action_plugin_swiftmail extends DokuWiki_Action_Plugin {
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    function register(&$controller){
+    function register(Doku_Event_Handler $controller){
         $controller->register_hook('MAIL_MESSAGE_SEND',
                                    'BEFORE',
                                    $this,
