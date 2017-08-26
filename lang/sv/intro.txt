@@ -1,0 +1,5 @@
+====== SwiftMail-testning ======
+
+Denna sida låter dig trigga utskick av ett test-e-brev i DokuWiki. Du kan använda det för att kontrollera att du konfigurerat SwiftMail-pluginet korrekt.
+
+Fyll i mottagarnas e-postadresser i formuläret nedan.
