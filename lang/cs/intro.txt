@@ -1,0 +1,5 @@
+====== Zkouška SwiftMail ======
+
+Na této stránce můžete vyvolat odeslání zkušebního e-mailu z DokuWiki. Můžete toho využít pro ověření správnosti nastavení doplňku SwiftMail.
+
+Do formuláře níže vyplňte e-mailovou adresu příjemce.
